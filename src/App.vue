@@ -1,15 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <GenForm @JSONData="parseData" />
+  <Table :tableData="this.parseTableData" />
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import GenForm from './components/GenForm.vue'
+import Table from './components/Table.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    GenForm,
+    Table
+  },
+  data () {
+    return {
+      parseTableData: null
+    }
+  },
+  methods: {
+    parseData (tableData) {
+      this.parseTableData = JSON.parse(tableData)
+    }
   }
 }
 </script>
