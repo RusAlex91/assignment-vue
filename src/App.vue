@@ -1,6 +1,6 @@
 <template>
-  <GenForm @JSONData="parseData" />
-  <Table :tableData="this.parseTableData" />
+  <GenForm @TableData="parseData" />
+  <Table :tableData="this.parseTableData" :tableLimit="this.tableLimit" />
 </template>
 
 <script>
@@ -15,12 +15,14 @@ export default {
   },
   data () {
     return {
-      parseTableData: null
+      parseTableData: null,
+      tableLimit: null
     }
   },
   methods: {
-    parseData (tableData) {
-      this.parseTableData = JSON.parse(tableData)
+    parseData ({ JSONData, tableLimit }) {
+      this.parseTableData = JSON.parse(JSONData)
+      this.tableLimit = tableLimit
     }
   }
 }

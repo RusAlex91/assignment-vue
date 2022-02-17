@@ -7,7 +7,7 @@
           <th>name</th>
           <th>rand</th>
         </tr>
-        <tr v-for="entry in this.dataTable" :key="entry.id">
+        <tr v-for="entry in computedObj" :key="entry.id">
           <td>{{ entry.id }}</td>
           <td>{{ entry.title }}</td>
           <td>{{ entry.rand }}</td>
@@ -27,16 +27,29 @@ export default {
     tableData: {
       type: Array,
       default: () => []
+    },
+    tableLimit: {
+      type: Number,
+      default: 0
     }
   },
   data () {
     return {
-      dataTable: null
+      dataTable: null,
+      limit: null
     }
   },
   watch: {
     tableData (newValue, oldValue) {
       this.dataTable = this.tableData
+    },
+    tableLimit () {
+      this.limit = this.tableLimit
+    }
+  },
+  computed: {
+    computedObj () {
+      return this.limit ? this.dataTable.slice(0, this.limit) : this.dataTable
     }
   }
 }
