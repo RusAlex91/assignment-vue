@@ -77,4 +77,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+input {
+  margin-right: 10px;
+}
+
+form button {
+  margin-right: 10px;
+}
+</style>
