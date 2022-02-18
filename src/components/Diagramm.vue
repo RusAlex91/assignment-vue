@@ -28,10 +28,6 @@ export default {
     createDiagramm () {
       const data = this.tableData
       const diagrammData = []
-      // const key = 'rand'
-      // const uniqeData = [
-      //   ...new Map(data.map(item => [item[key], item])).values()
-      // ]
       const uniqRand = this.rands.split(',')
       uniqRand.forEach((element, index) => {
         const filteredArray = data.filter(
