@@ -1,7 +1,11 @@
 <template>
-  <GenForm @TableData="parseData" />
-  <Table :tableData="this.parseTableData" :tableLimit="this.tableLimit" />
-  <Diagramm :tableData="this.parseTableData" :rands="this.rands" />
+  <div id="app" class="d-flex justify-content-center align-items-center">
+    <div>
+      <GenForm @TableData="parseData" class="mb-3" />
+      <Table :tableData="this.parseTableData" :tableLimit="this.tableLimit" />
+    </div>
+    <Diagramm :tableData="this.parseTableData" :rands="this.rands" />
+  </div>
 </template>
 
 <script>
@@ -35,11 +39,6 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 </style>
