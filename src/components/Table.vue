@@ -1,26 +1,20 @@
 <template>
   <div class="table-wrapper">
-    <div class="table">
-      <table>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>rand</th>
-        </tr>
-        <tr v-for="entry in updatedTableData" :key="entry.id">
-          <td>{{ entry.id }}</td>
-          <td>{{ entry.title }}</td>
-          <td>{{ entry.rand }}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="table-controls">
-      <button @click="prevTablePage" class="pag-button">-5</button>
-      <button @click="nextTablePage" class="pag-button">+5</button>
-      <div class="pagination" v-for="page in pageCount" :key="page">
-        <button @click="toPage(page)">{{ page }}</button>
-      </div>
-    </div>
+    <b-table
+      id="main-table"
+      striped
+      hover
+      :per-page="this.limit"
+      :items="dataTable"
+      :fields="fields"
+      :current-page="currentPage"
+    ></b-table>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="this.tableLength"
+      :per-page="this.limit"
+      aria-controls="main-table"
+    ></b-pagination>
   </div>
 </template>
 
@@ -40,52 +34,23 @@ export default {
     return {
       dataTable: null,
       limit: 0,
-      updatedTableData: null,
-      updatedLimit: null,
-      pageCount: null
+      fields: [
+        { key: 'id', sortable: true },
+        { key: 'title', sortable: true },
+        { key: 'rand', sortable: true }
+      ],
+      currentPage: 1,
+      pagPerPage: 1,
+      tableLength: null
     }
   },
   watch: {
-    tableData (newValue, oldValue) {
+    tableData () {
       this.dataTable = this.tableData
-      this.pageCount = this.tableData.length / this.tableLimit
     },
     tableLimit () {
       this.limit = this.tableLimit
-      this.updatedLimit = this.tableLimit
-      this.limitedData()
-    }
-  },
-  methods: {
-    prevTablePage () {
-      const newLimit = this.updatedLimit - this.limit
-      const prevLimit = this.updatedLimit - this.limit - this.limit
-      // if (newLimit === 0) {
-      //   newLimit = this.limit
-      // }
-      this.updateLimit(newLimit, prevLimit)
-      this.updatedLimit = newLimit
-    },
-    nextTablePage () {
-      const newLimit = this.updatedLimit + this.limit
-      const prevLimit = this.updatedLimit
-      this.updateLimit(newLimit, prevLimit)
-      this.updatedLimit = newLimit
-    },
-    updateLimit (newLimit, prevLimit) {
-      const dataTable = this.dataTable
-      this.updatedTableData = dataTable.slice(prevLimit, newLimit)
-    },
-    limitedData () {
-      const dataTable = this.dataTable
-      this.updatedTableData = dataTable.slice(0, this.updatedLimit)
-    },
-    toPage (num) {
-      debugger
-      const dataTable = this.dataTable
-      const prevLimit = (num - 1) * this.limit
-      const newLimit = prevLimit + this.limit
-      this.updatedTableData = dataTable.slice(prevLimit, newLimit)
+      this.tableLength = this.dataTable.length
     }
   }
 }
