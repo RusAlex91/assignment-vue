@@ -3,13 +3,13 @@
     <form action="" v-on:submit.prevent>
       <input
         placeholder="0"
-        v-model="recordsCount"
+        v-model.number="recordsCount"
         type="number"
         class="records-number"
       />
       <input
         placeholder="0"
-        v-model="onPageCount"
+        v-model.number="onPageCount"
         type="number"
         class="onpage-number"
       />
@@ -72,8 +72,6 @@ export default {
     },
     generateJSON () {
       this.JSONData = JSON.stringify(this.preJSONdata)
-      console.table(this.JSONData)
-      console.log(this.JSONData)
     }
   }
 }

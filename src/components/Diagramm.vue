@@ -1,7 +1,6 @@
 <template>
   <div class="canvas-wrapper">
     <canvas ref="canvas"></canvas>
-    <button @click="createDiagrammData()">Create</button>
   </div>
 </template>
 
@@ -20,9 +19,13 @@ export default {
       default: null
     }
   },
-  data () {},
+  watch: {
+    rands () {
+      this.createDiagramm()
+    }
+  },
   methods: {
-    createDiagrammData () {
+    createDiagramm () {
       const data = this.tableData
       const diagrammData = []
       // const key = 'rand'
@@ -38,8 +41,6 @@ export default {
         diagrammData.push(filteredLength)
       })
 
-      // console.log(uniqeData)
-      console.log(diagrammData)
       this.renderChart(
         {
           labels: uniqRand,
@@ -74,7 +75,9 @@ export default {
       )
     }
   },
-  mounted () {}
+  updated () {
+    this.createDiagramm()
+  }
 }
 </script>
 
