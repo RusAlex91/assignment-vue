@@ -41,7 +41,11 @@ export default {
       this.generateData()
       this.generateJSON()
       const JSON = this.JSONData
-      this.$emit('TableData', { JSONData: JSON, tableLimit: this.onPageCount })
+      this.$emit('TableData', {
+        JSONData: JSON,
+        tableLimit: this.onPageCount,
+        rands: this.randWords
+      })
     },
     resetData () {
       this.recordsCount = null
