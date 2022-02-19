@@ -68,14 +68,20 @@ export default {
   },
   methods: {
     applyData () {
-      this.generateData()
-      this.generateJSON()
-      const JSON = this.JSONData
-      this.$emit('TableData', {
-        JSONData: JSON,
-        tableLimit: this.onPageCount,
-        rands: this.randWords
-      })
+      if (
+        this.inputRecordError === '' &&
+        this.inputPageError === '' &&
+        this.inputRandError === ''
+      ) {
+        this.generateData()
+        this.generateJSON()
+        const JSON = this.JSONData
+        this.$emit('TableData', {
+          JSONData: JSON,
+          tableLimit: this.onPageCount,
+          rands: this.randWords
+        })
+      }
     },
     resetData () {
       this.recordsCount = null
@@ -119,23 +125,26 @@ export default {
       }
     },
     recordsCount () {
+      const reg = /[.]+/g
       if (this.recordsCount === null) {
         this.inputRecordError = ''
         return
       }
-      if (this.recordsCount < 1) {
-        this.inputRecordError = 'Entries must be more then zero'
+      if (this.recordsCount < 1 || reg.test(this.recordsCount)) {
+        this.inputRecordError = 'Entries must be integer and more then zero'
       } else {
         this.inputRecordError = ''
       }
     },
     onPageCount () {
+      const reg = /[,]+/g
       if (this.onPageCount === null) {
         this.inputPageError = ''
         return
       }
-      if (this.onPageCount < 1) {
-        this.inputPageError = 'Entries max rows must be more then zero'
+      if (this.onPageCount < 1 || reg.test(this.recordsCount)) {
+        this.inputPageError =
+          'Entries max rows must be more then zero and integer'
       } else {
         this.inputPageError = ''
       }
