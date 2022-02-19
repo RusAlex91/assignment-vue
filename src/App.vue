@@ -5,11 +5,17 @@
       <Table :tableData="this.parseTableData" :tableLimit="this.tableLimit" />
     </div>
     <div class="d-flex flex-column justify-content-center align-items-center">
-      <Diagramm
+      <select v-model="type">
+        <option value="pie-chart">Pie</option>
+        <option value="bar-chart">Bar</option>
+      </select>
+      <component
         :tableData="this.parseTableData"
         :rands="this.rands"
         class="mb-3"
+        :is="type"
       />
+
       <download-csv
         :data="this.parseTableData"
         v-if="parseTableData.length > 0"
@@ -25,20 +31,23 @@
 <script>
 import GenForm from './components/GenForm.vue'
 import Table from './components/Table.vue'
-import Diagramm from './components/Diagramm.vue'
+import PieChart from './components/PieChart.vue'
+import BarChart from './components/BarChart.vue'
 
 export default {
   name: 'App',
   components: {
     GenForm,
     Table,
-    Diagramm
+    PieChart,
+    BarChart
   },
   data () {
     return {
       parseTableData: [],
       tableLimit: null,
-      rands: null
+      rands: null,
+      type: 'pie-chart'
     }
   },
   methods: {

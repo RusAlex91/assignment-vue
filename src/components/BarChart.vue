@@ -1,14 +1,8 @@
-<template>
-  <div class="canvas-wrapper">
-    <canvas ref="canvas"></canvas>
-  </div>
-</template>
-
 <script>
-import { Pie } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 
 export default {
-  extends: Pie,
+  extends: Bar,
   props: {
     tableData: {
       type: Array,
@@ -36,13 +30,13 @@ export default {
         const filteredLength = filteredArray.length
         diagrammData.push(filteredLength)
       })
-
+      console.log(diagrammData)
       this.renderChart(
         {
           labels: uniqRand,
           datasets: [
             {
-              label: '# of Rand',
+              label: '№ of Rand',
               data: diagrammData,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -71,7 +65,7 @@ export default {
       )
     }
   },
-  updated () {
+  mounted () {
     this.createDiagramm()
   }
 }

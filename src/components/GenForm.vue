@@ -8,6 +8,7 @@
           v-model.number="recordsCount"
           type="number"
           class="records-number"
+          requiered
         />
         <span
           :class="{ invisible: inputRecordError == '' }"
@@ -22,6 +23,7 @@
           v-model.number="onPageCount"
           type="number"
           class="onpage-number"
+          requiered
         />
         <span
           :class="{ invisible: inputPageError == '' }"
@@ -36,6 +38,7 @@
           v-model="randWords"
           type="text"
           class="rand-words"
+          requiered
         />
         <span
           :class="{ invisible: inputRandError == '' }"
