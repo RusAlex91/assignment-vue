@@ -66,7 +66,9 @@ export default {
     }
   },
   mounted () {
-    this.createDiagramm()
+    if (this.rands !== null) {
+      this.createDiagramm()
+    }
   }
 }
 </script>

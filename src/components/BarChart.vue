@@ -20,53 +20,34 @@ export default {
   },
   methods: {
     createDiagramm () {
+      // eslint-disable-next-line no-debugger
+
       const data = this.tableData
-      const diagrammData = []
+
       const uniqRand = this.rands.split(',')
+      const datasets = []
       uniqRand.forEach((element, index) => {
         const filteredArray = data.filter(
           uniq => uniq.rand === `${uniqRand[index]}`
         )
         const filteredLength = filteredArray.length
-        diagrammData.push(filteredLength)
-      })
-      console.log(diagrammData)
-      this.renderChart(
-        {
-          labels: uniqRand,
-          datasets: [
-            {
-              label: '№ of Rand',
-              data: diagrammData,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-            }
-          ]
-        },
-        {
-          responsive: true,
-          maintainAspectRatio: false
+
+        const set = {
+          label: uniqRand[index],
+          backgroundColor:
+            '#' + Math.floor(Math.random() * 16777215).toString(16),
+          data: [filteredLength]
         }
-      )
+        datasets.push(set)
+      })
+
+      this.renderChart({ datasets })
     }
   },
   mounted () {
-    this.createDiagramm()
+    if (this.rands !== null) {
+      this.createDiagramm()
+    }
   }
 }
 </script>
