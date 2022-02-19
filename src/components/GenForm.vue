@@ -1,24 +1,48 @@
 <template>
   <div class="">
     <form action="" v-on:submit.prevent>
-      <input
-        placeholder="0"
-        v-model.number="recordsCount"
-        type="number"
-        class="records-number"
-      />
-      <input
-        placeholder="0"
-        v-model.number="onPageCount"
-        type="number"
-        class="onpage-number"
-      />
-      <input
-        placeholder="apple, tomato"
-        v-model="randWords"
-        type="text"
-        class="rand-words"
-      />
+      <label>
+        Entries to generate
+        <input
+          placeholder="0"
+          v-model.number="recordsCount"
+          type="number"
+          class="records-number"
+        />
+        <span
+          :class="{ invisible: inputRecordError == '' }"
+          class="text-danger inputError"
+          >{{ this.inputRecordError }}</span
+        >
+      </label>
+      <label>
+        Entries on page limit
+        <input
+          placeholder="0"
+          v-model.number="onPageCount"
+          type="number"
+          class="onpage-number"
+        />
+        <span
+          :class="{ invisible: inputPageError == '' }"
+          class="text-danger inputError"
+          >{{ this.inputPageError }}</span
+        >
+      </label>
+      <label>
+        Entries name to generate
+        <input
+          placeholder="apple, tomato"
+          v-model="randWords"
+          type="text"
+          class="rand-words"
+        />
+        <span
+          :class="{ invisible: inputRandError == '' }"
+          class="text-danger inputError"
+          >{{ this.inputRandError }}</span
+        >
+      </label>
       <button @click="applyData" class="apply">Подтвердить</button>
       <button @click="resetData" class="reset">Сбросить</button>
     </form>
@@ -33,7 +57,10 @@ export default {
       onPageCount: null,
       randWords: null,
       preJSONdata: null,
-      JSONData: null
+      JSONData: null,
+      inputRecordError: '',
+      inputPageError: '',
+      inputRandError: ''
     }
   },
   methods: {
@@ -73,13 +100,65 @@ export default {
     generateJSON () {
       this.JSONData = JSON.stringify(this.preJSONdata)
     }
+  },
+  watch: {
+    randWords () {
+      if (this.randWords === null) {
+        this.inputRandError = ''
+        return
+      }
+      const reg = /^\w+(?:(?:,\s\w+)+|(?:\s\w+)+)$/
+      if (!reg.test(this.randWords)) {
+        this.inputRandError =
+          'Enter more than one word separated by commas and spaces'
+      } else {
+        this.inputRandError = ''
+      }
+    },
+    recordsCount () {
+      if (this.recordsCount === null) {
+        this.inputRecordError = ''
+        return
+      }
+      if (this.recordsCount < 1) {
+        this.inputRecordError = 'Entries must be more then zero'
+      } else {
+        this.inputRecordError = ''
+      }
+    },
+    onPageCount () {
+      if (this.onPageCount === null) {
+        this.inputPageError = ''
+        return
+      }
+      if (this.onPageCount < 1) {
+        this.inputPageError = 'Entries max rows must be more then zero'
+      } else {
+        this.inputPageError = ''
+      }
+    }
   }
 }
 </script>
 
 <style>
-input {
+.invisible {
+  visibility: hidden;
+}
+
+.inputError {
+  position: absolute;
+  top: 10;
+}
+
+form input {
+  display: flex;
   margin-right: 10px;
+}
+
+form label {
+  margin-bottom: 60px;
+  position: relative;
 }
 
 form button {
