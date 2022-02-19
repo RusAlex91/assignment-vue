@@ -4,7 +4,21 @@
       <GenForm @TableData="parseData" class="mb-3" />
       <Table :tableData="this.parseTableData" :tableLimit="this.tableLimit" />
     </div>
-    <Diagramm :tableData="this.parseTableData" :rands="this.rands" />
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <Diagramm
+        :tableData="this.parseTableData"
+        :rands="this.rands"
+        class="mb-3"
+      />
+      <download-csv
+        :data="this.parseTableData"
+        v-if="parseTableData.length > 0"
+        class="btn"
+      >
+        Download Data
+        <img src="../src/assets/csv-file.svg" width="20px" />
+      </download-csv>
+    </div>
   </div>
 </template>
 
@@ -22,7 +36,7 @@ export default {
   },
   data () {
     return {
-      parseTableData: null,
+      parseTableData: [],
       tableLimit: null,
       rands: null
     }
